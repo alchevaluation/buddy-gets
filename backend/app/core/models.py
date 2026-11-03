@@ -63,4 +63,3 @@ class FxRate(Base):
 
 
 MEASURES = {'BUDGET', 'ACTUAL', 'RESERVED', 'COMMITTED', 'CONTINGENCED', 'BLOCKED'}
-TOKEN = re.compile(r'\[([A-Za-z0-9_.-]+)\]')

@@ -21,7 +21,7 @@ set DATABASE_URL=postgresql+psycopg://buddygets_app:YOUR_URL_ENCODED_PASSWORD@12
 python -m uvicorn backend.app.main:app --reload
 ```
 
-Alternatively create a `DATABASE_URL` environment variable in your local shell. The `.env.example` is only a template; this version does not automatically load `.env` files. The API documentation is at `http://127.0.0.1:8000/docs`.
+Alternatively, create a local `.env` at the repository root with `DATABASE_URL=...` (copy `.env.example` and replace the placeholder). `pydantic-settings` loads this file at startup. An environment variable takes precedence over `.env`. The API documentation is at `http://127.0.0.1:8000/docs`.
 
 For isolated tests with SQLite (no PostgreSQL changes):
 
@@ -29,6 +29,14 @@ For isolated tests with SQLite (no PostgreSQL changes):
 set PYTHONPATH=backend
 python -m pytest backend/tests -q
 ```
+
+## Code structure
+
+- `backend/app/core/models.py`: SQLAlchemy entities and measure catalogue.
+- `backend/app/core/calculations.py`: safe formulas and currency-aware matrix aggregation.
+- `backend/app/core/config.py`: validated application settings from environment or local `.env`.
+- `backend/app/core/database.py`: engine/session factory (single source of database configuration).
+- `backend/app/main.py`: FastAPI routes and app factory.
 
 ## Model
 

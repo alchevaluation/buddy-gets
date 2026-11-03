@@ -53,3 +53,7 @@ python -m pytest backend/tests -q
 ## Cautions
 
 The API uses integer IDs and is a prototype. Currency codes are syntactically validated but not matched against a currency reference table. Values have four decimal places. Do not expose this server to the public internet or enter real company data. Missing rates, circular formulas and invalid references fail explicitly. `create_all` is a development bootstrap, not a production migration strategy. No task submission text is supplied; follow the CC-CLI program's authoring requirements.
+
+## License
+
+This project is licensed under the **GNU Affero General Public License v3.0 (AGPL-3.0-only)**. See [LICENSE](LICENSE). Modifications distributed to others or made available through a network must comply with the license's applicable source-code obligations. This is a strong-copyleft open-source license, not an all-rights-reserved proprietary license.

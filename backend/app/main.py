@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import os
 from contextlib import asynccontextmanager
 from datetime import date
 from decimal import Decimal
@@ -8,10 +7,11 @@ from typing import Literal
 
 from fastapi import Depends, FastAPI, HTTPException
 from pydantic import BaseModel, Field, model_validator
-from sqlalchemy import create_engine, select
-from sqlalchemy.orm import Session, sessionmaker
+from sqlalchemy import select
+from sqlalchemy.orm import Session
 
 from .core import Base, Budget, FxRate, Line, MEASURES, Period, Value, matrix
+from .core.database import make_engine, make_session_factory
 
 
 class BudgetIn(BaseModel):
@@ -62,9 +62,8 @@ class RateIn(BaseModel):
 
 
 def create_app(database_url: str | None = None) -> FastAPI:
-    url = database_url or os.getenv('DATABASE_URL', 'sqlite:///./buddygets_dev.db')
-    engine = create_engine(url, pool_pre_ping=True)
-    SessionLocal = sessionmaker(engine)
+    engine = make_engine(database_url)
+    SessionLocal = make_session_factory(engine)
     @asynccontextmanager
     async def lifespan(_app: FastAPI):
         Base.metadata.create_all(engine)  # Bootstrap MVP only; replace with Alembic migrations later.

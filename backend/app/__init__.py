@@ -1,0 +1,1 @@
+"""Buddy-Gets budget core."""
